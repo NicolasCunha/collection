@@ -22,6 +22,8 @@ jobs:
   deploy:
     name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
+    env:
+      GIT_USER: ${{ secrets.GIT_USER }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -33,7 +35,5 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Build website
         run: yarn build
-      - name: Set Git User
-        run: export GIT_USER=${{ secrets.GIT_USER }}
       - name: Deploy
         run: yarn deploy
