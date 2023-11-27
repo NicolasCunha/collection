@@ -9,6 +9,9 @@ on:
 
 jobs:
   test-deploy:
+    defaults:
+      run:
+        working-directory: collection-docs
     name: Test deployment
     runs-on: ubuntu-latest
     steps:
