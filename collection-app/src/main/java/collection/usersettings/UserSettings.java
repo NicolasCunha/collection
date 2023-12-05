@@ -1,4 +1,4 @@
-package collection.data;
+package collection.usersettings;
 
 public class UserSettings {
 

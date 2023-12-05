@@ -1,4 +1,4 @@
-package collection.ui;
+package collection.util;
 
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;

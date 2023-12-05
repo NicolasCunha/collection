@@ -1,11 +1,16 @@
 package collection.tcg;
 
+import collection.core.Collection;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+
 import java.util.Objects;
 
 @Entity
@@ -14,8 +19,13 @@ public final class Card {
 
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "card_seq_gen")
+    @SequenceGenerator(name = "card_seq_gen", sequenceName = "card_seq", allocationSize = 1)
     private Long id;
+
+    @JoinColumn(name = "collection_id")
+    @ManyToOne
+    private Collection collection;
 
     @Column
     private String game;
@@ -38,42 +48,88 @@ public final class Card {
     public Card() {
     }
 
-    public Card(Long id, String game, String name, String rarity, String cardSet, String rating, String comment) {
-        this.id = id;
-        this.game = game;
-        this.name = name;
-        this.rarity = rarity;
-        this.cardSet = cardSet;
-        this.rating = rating;
-        this.comment = comment;
+    public static Card create(final Collection collection,
+                              final Long id,
+                              final String game,
+                              final String name,
+                              final String rarity,
+                              final String cardSet,
+                              final String rating,
+                              final String comment) {
+        final Card card = new Card();
+        card.setCollection(collection);
+        card.setId(id);
+        card.setGame(game);
+        card.setName(name);
+        card.setRarity(rarity);
+        card.setCardSet(cardSet);
+        card.setRating(rating);
+        card.setComment(comment);
+        return card;
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Collection getCollection() {
+        return collection;
+    }
+
+    public void setCollection(Collection collection) {
+        this.collection = collection;
+    }
+
     public String getGame() {
         return game;
+    }
+
+    public void setGame(String game) {
+        this.game = game;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getRarity() {
         return rarity;
+    }
+
+    public void setRarity(String rarity) {
+        this.rarity = rarity;
     }
 
     public String getCardSet() {
         return cardSet;
     }
 
+    public void setCardSet(String cardSet) {
+        this.cardSet = cardSet;
+    }
+
     public String getRating() {
         return rating;
     }
 
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
     public String getComment() {
         return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     @Override
@@ -97,14 +153,15 @@ public final class Card {
 
     @Override
     public String toString() {
-        return "Card[" +
-                "id=" + id + ", " +
-                "game=" + game + ", " +
-                "name=" + name + ", " +
-                "rarity=" + rarity + ", " +
-                "set=" + cardSet + ", " +
-                "rating=" + rating + ", " +
-                "comment=" + comment + ']';
+        return "Card{" +
+                "id=" + id +
+                ", collection=" + collection +
+                ", game='" + game + '\'' +
+                ", name='" + name + '\'' +
+                ", rarity='" + rarity + '\'' +
+                ", cardSet='" + cardSet + '\'' +
+                ", rating='" + rating + '\'' +
+                ", comment='" + comment + '\'' +
+                '}';
     }
-
 }

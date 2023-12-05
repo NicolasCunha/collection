@@ -1,6 +1,6 @@
-package collection.data;
+package collection.util;
 
-import collection.io.CollectionPath;
+import collection.core.Collection;
 import collection.tcg.Card;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -32,6 +32,7 @@ public class HibernateUtil {
                 configuration.setProperties(settings);
 
                 //model
+                configuration.addAnnotatedClass(Collection.class);
                 configuration.addAnnotatedClass(Card.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
