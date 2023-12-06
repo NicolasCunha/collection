@@ -25,11 +25,11 @@ public class TcgTabController implements Initializable {
     @FXML
     public void initialize(final URL location, final ResourceBundle resourceBundle) {
         TableViewUtil.configTableCellValueFactory(tcgTable);
-        this.configTcgEvents();
+        configEvents();
         loadData();
     }
 
-    private void configTcgEvents() {
+    private void configEvents() {
 
         createNewTcgCard.setOnAction(event -> {
             final Card card = Card.create(
