@@ -45,6 +45,9 @@ public final class Card {
   private String rating;
 
   @Column
+  private Long quantity;
+
+  @Column
   private String comment;
 
   /**
@@ -74,6 +77,7 @@ public final class Card {
                             final String rarity,
                             final String cardSet,
                             final String rating,
+                            final Long quantity,
                             final String comment) {
     final Card card = new Card();
     card.setCollection(collection);
@@ -83,6 +87,7 @@ public final class Card {
     card.setRarity(rarity);
     card.setCardSet(cardSet);
     card.setRating(rating);
+    card.setQuantity(quantity);
     card.setComment(comment);
     return card;
   }
@@ -141,6 +146,14 @@ public final class Card {
 
   public void setRating(String rating) {
     this.rating = rating;
+  }
+
+  public Long getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Long quantity) {
+    this.quantity = quantity;
   }
 
   public String getComment() {

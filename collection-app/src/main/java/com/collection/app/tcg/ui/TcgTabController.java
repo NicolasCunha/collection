@@ -46,17 +46,7 @@ public class TcgTabController implements Initializable {
   private void configEvents() {
 
     createNewTcgCard.setOnAction(event -> {
-      final Card card = Card.create(
-          this.collection,
-          null,
-          "Flesh and Blood",
-          "High Voltage",
-          "Rare",
-          "History Pack",
-          "7",
-          "Very cool"
-      );
-      cardService.addCard(card);
+      StageHolder.closeAndOpen("collection-create-new-card.fxml", "Collection - Create New Card");
       loadData();
     });
 
