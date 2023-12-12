@@ -66,6 +66,7 @@ public class UserSettings {
 
   /**
    * Adds a collection the recent collection list - if it doesn't already exist.
+   *
    * @param collectionId {@link UUID} collection id.
    */
   public void addRecentCollection(final UUID collectionId) {

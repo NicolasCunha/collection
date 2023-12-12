@@ -14,6 +14,7 @@ public final class ResourceLoader {
 
   /**
    * Load a resource based on {@link CollectionApp} class.
+   *
    * @param resource {@link String} resource name.
    * @return {@link URL} resource URL.
    */

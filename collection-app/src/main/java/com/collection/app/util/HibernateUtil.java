@@ -27,12 +27,8 @@ public final class HibernateUtil {
    */
   public static SessionFactory getSessionFactory() {
     if (sessionFactory == null) {
-
       try {
-        Configuration configuration = new Configuration();
-
-        //hibernate settings equivalent to hibernate.cfg.xml's properties
-        Properties settings = new Properties();
+        final Properties settings = new Properties();
         settings.put(Environment.DRIVER, "org.h2.Driver");
         settings.put(Environment.URL, "jdbc:h2:~/.collection/collection_data");
         settings.put(Environment.DIALECT, "org.hibernate.dialect.H2Dialect");
@@ -40,16 +36,12 @@ public final class HibernateUtil {
         settings.put(Environment.SHOW_SQL, "true");
         settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
         settings.put(Environment.HBM2DDL_AUTO, "update");
-
+        final Configuration configuration = new Configuration();
         configuration.setProperties(settings);
-
-        //model
         configuration.addAnnotatedClass(Collection.class);
         configuration.addAnnotatedClass(Card.class);
-
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+        final ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
             .applySettings(configuration.getProperties()).build();
-
         sessionFactory = configuration.buildSessionFactory(serviceRegistry);
       } catch (Exception e) {
         e.printStackTrace();

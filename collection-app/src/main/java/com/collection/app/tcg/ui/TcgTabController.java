@@ -28,6 +28,14 @@ public class TcgTabController implements Initializable {
   @FXML
   private Button createNewTcgCard;
 
+  /**
+   * Initialize the JavaFX controller instance.
+   *
+   * @param location       The location used to resolve relative paths for the root object,
+   *                       or {@code null} if the location is not known.
+   * @param resourceBundle The resources used to localize the root object,
+   *                       or {@code null} if the root object was not localized.
+   */
   @FXML
   public void initialize(final URL location, final ResourceBundle resourceBundle) {
     TableViewUtil.configTableCellValueFactory(tcgTable);
