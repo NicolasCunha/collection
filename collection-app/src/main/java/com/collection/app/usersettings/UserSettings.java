@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public class UserSettings {
 
@@ -18,7 +19,7 @@ public class UserSettings {
             .concat(File.separator)
             .concat("user-settings.json");
 
-    private List<String> recentCollections = new LinkedList<>();
+    private List<UUID> recentCollectionIds = new LinkedList<>();
 
     public static UserSettings load() {
 
@@ -36,10 +37,8 @@ public class UserSettings {
             final String json = Files.readString(path);
             return new Gson().fromJson(json, UserSettings.class);
         } catch (final Exception ex) {
-            ex.printStackTrace();
+            throw new RuntimeException();
         }
-
-        return null;
 
     }
 
@@ -54,11 +53,17 @@ public class UserSettings {
         }
     }
 
-    public List<String> getRecentCollections() {
-        return recentCollections;
+    public void addRecentCollection(final UUID collectionId) {
+        if (!getRecentCollections().contains(collectionId)) {
+            getRecentCollections().add(collectionId);
+        }
     }
 
-    public void setRecentCollections(List<String> recentCollections) {
-        this.recentCollections = recentCollections;
+    public List<UUID> getRecentCollections() {
+        return recentCollectionIds;
+    }
+
+    public void setRecentCollections(List<UUID> recentCollections) {
+        this.recentCollectionIds = recentCollections;
     }
 }

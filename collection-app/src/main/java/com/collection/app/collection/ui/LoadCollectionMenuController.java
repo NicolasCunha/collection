@@ -1,9 +1,9 @@
 package com.collection.app.collection.ui;
 
-import com.collection.app.CollectionDataHolder;
 import com.collection.app.audit.AuditService;
 import com.collection.app.collection.Collection;
 import com.collection.app.collection.CollectionService;
+import com.collection.app.collection.LoadCollectionAction;
 import com.collection.app.util.StageHolder;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 public class LoadCollectionMenuController implements Initializable {
 
     private final CollectionService collectionService = new CollectionService();
+    private final LoadCollectionAction loadCollectionAction = new LoadCollectionAction();
 
     @FXML
     private ComboBox<Collection> collections;
@@ -51,9 +52,7 @@ public class LoadCollectionMenuController implements Initializable {
 
     private void loadCollection() {
         final Collection selectedCollection = this.collections.getSelectionModel().getSelectedItem();
-        AuditService.audit("Loading selected collection: %s", selectedCollection.getName());
-        CollectionDataHolder.CURRENT_COLLECTION = selectedCollection;
-        StageHolder.closeAndOpen("collection-menu.fxml", "Collection - Menu");
+        this.loadCollectionAction.loadCollection(selectedCollection);
     }
 
     private void goBackToStartUp() {

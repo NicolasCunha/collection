@@ -1,20 +1,14 @@
 package com.collection.app.collection.ui;
 
-import com.collection.app.CollectionDataHolder;
 import com.collection.app.collection.Collection;
 import com.collection.app.collection.CollectionService;
-import com.collection.app.util.ResourceLoader;
+import com.collection.app.util.StageHolder;
 import com.google.common.collect.Lists;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -80,34 +74,17 @@ public class CreateNewCollectionController implements Initializable {
                 booksSelected,
                 gamesSelected
         );
-        CollectionDataHolder.CURRENT_COLLECTION = this.collectionService.save(collection);
+        this.collectionService.save(collection);
+        StageHolder.getStage().getProperties().put("current_collection", collection);
         this.goToCollectionMenu();
     }
 
     private void goToStartUp() {
-        final Stage stage = (Stage) this.createCollection.getScene().getWindow();
-        stage.close();
-        final FXMLLoader fxmlLoader = new FXMLLoader(ResourceLoader.load("collection-startup.fxml"));
-        try {
-            final Scene scene = new Scene(fxmlLoader.load());
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        StageHolder.closeAndOpen("collection-startup.fxml", "Collection - Main Menu");
     }
 
     private void goToCollectionMenu() {
-        final Stage stage = (Stage) this.createCollection.getScene().getWindow();
-        stage.close();
-        final FXMLLoader fxmlLoader = new FXMLLoader(ResourceLoader.load("collection-menu.fxml"));
-        try {
-            final Scene scene = new Scene(fxmlLoader.load());
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        StageHolder.closeAndOpen("collection-menu.fxml", "Collection - Menu");
     }
 
 }

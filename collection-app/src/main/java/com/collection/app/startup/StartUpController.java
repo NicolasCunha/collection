@@ -1,28 +1,26 @@
 package com.collection.app.startup;
 
 import com.collection.app.audit.AuditService;
+import com.collection.app.collection.Collection;
 import com.collection.app.collection.CollectionService;
+import com.collection.app.collection.LoadCollectionAction;
 import com.collection.app.usersettings.UserSettings;
-import com.collection.app.util.ResourceLoader;
 import com.collection.app.util.StageHolder;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.checkerframework.checker.units.qual.C;
-
-import java.io.IOException;
+import javafx.scene.input.MouseEvent;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class StartUpController implements Initializable {
 
     private final CollectionService collectionService = new CollectionService();
+    private final LoadCollectionAction loadCollectionAction = new LoadCollectionAction();
 
     @FXML
     private Button createNewCollection;
@@ -34,7 +32,7 @@ public class StartUpController implements Initializable {
     private Button exit;
 
     @FXML
-    private ListView<String> recentCollections;
+    private ListView<Collection> recentCollections;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -44,29 +42,31 @@ public class StartUpController implements Initializable {
 
     private void loadRecentCollections() {
         final UserSettings userSettings = UserSettings.load();
-        if (userSettings != null && userSettings.getRecentCollections() != null) {
-            this.recentCollections.getItems().addAll(userSettings.getRecentCollections());
+        if (userSettings != null
+                && userSettings.getRecentCollections() != null
+                && !userSettings.getRecentCollections().isEmpty()) {
+            final List<Collection> collectionList = this.collectionService.getCollectionsByIds(userSettings.getRecentCollections());
+            this.recentCollections.getItems().addAll(collectionList);
         }
     }
 
     private void configureEvents() {
+        this.recentCollections.setOnMousePressed(this::loadCollectionOnDoubleClick);
         this.createNewCollection.setOnAction(event -> this.goToCreateNewCollection());
         this.exit.setOnAction(event -> this.exitApplication());
         this.openCollection.setOnAction(event -> this.openCollection());
         this.checkOpenCollectionEnabled();
     }
 
-    private void goToCreateNewCollection() {
-        final Stage stage = (Stage) this.createNewCollection.getScene().getWindow();
-        stage.close();
-        try {
-            final FXMLLoader fxmlLoader = new FXMLLoader(ResourceLoader.load("collection-create-new-collection.fxml"));
-            final Scene scene = new Scene(fxmlLoader.load());
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private void loadCollectionOnDoubleClick(final MouseEvent mouseEvent) {
+        if (mouseEvent.isPrimaryButtonDown() && mouseEvent.getClickCount() == 2) {
+            final Collection selectedCollection = this.recentCollections.getSelectionModel().getSelectedItem();
+            this.loadCollectionAction.loadCollection(selectedCollection);
         }
+    }
+
+    private void goToCreateNewCollection() {
+        StageHolder.closeAndOpen("collection-create-new-collection.fxml", "Collection - Create New Collection");
     }
 
     private void checkOpenCollectionEnabled() {

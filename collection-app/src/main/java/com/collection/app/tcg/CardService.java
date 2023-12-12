@@ -2,6 +2,7 @@ package com.collection.app.tcg;
 
 import com.collection.app.audit.AuditService;
 import com.collection.app.collection.Collection;
+import com.collection.app.log.LogService;
 import com.collection.app.util.HibernateUtil;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -29,7 +30,7 @@ public class CardService {
     public void addCard(final Card card) {
 
         if (card.getCollection() == null) {
-            System.out.println("Collection is null. What happened?");
+            LogService.log("Collection is null. What happened?");
         }
 
         AuditService.audit(String.format("Creating card: %s", card.toString()));

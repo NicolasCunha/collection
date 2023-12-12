@@ -1,8 +1,9 @@
 package com.collection.app.tcg.ui;
 
-import com.collection.app.CollectionDataHolder;
+import com.collection.app.collection.Collection;
 import com.collection.app.tcg.Card;
 import com.collection.app.tcg.CardService;
+import com.collection.app.util.StageHolder;
 import com.collection.app.util.TableViewUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -15,6 +16,7 @@ import java.util.ResourceBundle;
 public class TcgTabController implements Initializable {
 
     private final CardService cardService = new CardService();
+    private final Collection collection = (Collection) StageHolder.getStage().getProperties().get("current_collection");
 
     @FXML
     private TableView<Card> tcgTable;
@@ -33,7 +35,7 @@ public class TcgTabController implements Initializable {
 
         createNewTcgCard.setOnAction(event -> {
             final Card card = Card.create(
-                    CollectionDataHolder.CURRENT_COLLECTION,
+                    this.collection,
                     null,
                     "Flesh and Blood",
                     "High Voltage",
@@ -49,9 +51,7 @@ public class TcgTabController implements Initializable {
     }
 
     public void loadData() {
-        tcgTable.setItems(FXCollections.observableArrayList(cardService.loadCards(
-                CollectionDataHolder.CURRENT_COLLECTION
-        )));
+        tcgTable.setItems(FXCollections.observableArrayList(cardService.loadCards(this.collection)));
     }
 
 }

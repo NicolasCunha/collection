@@ -1,14 +1,17 @@
 package com.collection.app.collection.ui;
 
-import com.collection.app.CollectionDataHolder;
+import com.collection.app.collection.Collection;
 import com.collection.app.log.LogService;
 import com.collection.app.util.StageHolder;
+import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CollectionMenuController implements Initializable {
+
+    private final Collection currentCollection = (Collection) StageHolder.getStage().getProperties().get("current_collection");
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -21,7 +24,9 @@ public class CollectionMenuController implements Initializable {
             LogService.log("Stage reference is null. Something wrong happened!");
             return;
         }
-        stage.setTitle(String.format("Collection - %s", CollectionDataHolder.CURRENT_COLLECTION.getName()));
+        Platform.runLater(() -> {
+            StageHolder.getStage().setTitle(String.format("Collection - %s", currentCollection.getName()));
+        });
     }
 
 }

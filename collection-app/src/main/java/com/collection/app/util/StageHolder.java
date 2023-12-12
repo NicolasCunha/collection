@@ -6,7 +6,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public final class StageHolder {
@@ -27,12 +26,19 @@ public final class StageHolder {
     }
 
     public static Scene open(final String resource, final String appTitle) {
+        return StageHolder.open(resource, appTitle, null);
+    }
+
+    public static Scene open(final String resource, final String appTitle, final Object userData) {
         final FXMLLoader fxmlLoader = new FXMLLoader(ResourceLoader.load(resource));
         try {
             final Scene scene = new Scene(fxmlLoader.load());
             ROOT_STAGE.setTitle(appTitle);
             ROOT_STAGE.setScene(scene);
             scene.getWindow().sizeToScene();
+            if (userData != null) {
+                ROOT_STAGE.setUserData(userData);
+            }
             ROOT_STAGE.show();
             ROOT_STAGE.setOnCloseRequest(closeRequest -> {
                 ROOT_STAGE.close();
@@ -52,8 +58,12 @@ public final class StageHolder {
     }
 
     public static void closeAndOpen(final String resource, final String appTitle) {
+        StageHolder.closeAndOpen(resource, appTitle, null);
+    }
+
+    public static void closeAndOpen(final String resource, final String appTitle, final Object userData) {
         StageHolder.close();
-        StageHolder.open(resource, appTitle);
+        StageHolder.open(resource, appTitle, userData);
     }
 
     public static Scene getCurrentScene() {

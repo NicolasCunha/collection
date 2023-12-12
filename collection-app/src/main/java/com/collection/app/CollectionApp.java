@@ -20,6 +20,7 @@ public class CollectionApp extends Application {
     }
 
     public static void main(String[] args) {
+        // TODO: code clean up and add checkstyle
         loadDatabaseSession();
         launch();
     }

@@ -46,12 +46,12 @@
             <TableView fx:id="tcgTable" layoutX="27.0" layoutY="65.0" prefHeight="530.0" prefWidth="976.0">
                <columns>
                   <TableColumn fx:id="id" prefWidth="75.0" text="ID" />
-                  <TableColumn fx:id="game" prefWidth="75.0" text="Game" />
-                  <TableColumn fx:id="name" prefWidth="75.0" text="Card" />
-                  <TableColumn fx:id="rarity" prefWidth="75.0" text="Rarity" />
-                  <TableColumn fx:id="cardSet" prefWidth="75.0" text="Set" />
-                  <TableColumn fx:id="rating" prefWidth="127.0" text="Rating/Grading" />
-                  <TableColumn fx:id="comment" prefWidth="490.0" text="Comment" />
+                  <TableColumn fx:id="game" prefWidth="123.0" text="Game" />
+                  <TableColumn fx:id="name" prefWidth="182.0" text="Card" />
+                  <TableColumn fx:id="rarity" prefWidth="79.0" text="Rarity" />
+                  <TableColumn fx:id="cardSet" prefWidth="141.0" text="Set" />
+                  <TableColumn fx:id="rating" prefWidth="165.0" text="Rating/Grading" />
+                  <TableColumn fx:id="comment" prefWidth="227.0" text="Comment" />
                </columns>
             </TableView>
          </children>
