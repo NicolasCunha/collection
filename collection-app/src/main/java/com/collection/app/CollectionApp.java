@@ -6,29 +6,36 @@ import com.collection.app.util.StageHolder;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * Application bootstrap class.
+ */
 public class CollectionApp extends Application {
 
-    @Override
-    public void start(Stage stage) {
-        showMainScreen(stage);
-    }
+  /**
+   * Main method.
+   *
+   * @param args Application arguments.
+   */
+  public static void main(String[] args) {
+    CollectionApp.loadDatabaseSession();
+    CollectionApp.launch();
+  }
 
-    private void showMainScreen(Stage stage) {
-        StageHolder.defineScene(stage);
-        AuditService.audit("Starting application.");
-        StageHolder.open("collection-startup.fxml", "Collection - Main Menu");
-    }
+  @Override
+  public void start(Stage stage) {
+    showMainScreen(stage);
+  }
 
-    public static void main(String[] args) {
-        // TODO: code clean up and add checkstyle
-        loadDatabaseSession();
-        launch();
-    }
+  private void showMainScreen(Stage stage) {
+    StageHolder.defineScene(stage);
+    AuditService.audit("Starting application.");
+    StageHolder.open("collection-startup.fxml", "Collection - Main Menu");
+  }
 
-    private static void loadDatabaseSession() {
-        AuditService.audit("Starting loading database session.");
-        HibernateUtil.getSessionFactory();
-        AuditService.audit("Finished loading database session.");
-    }
+  private static void loadDatabaseSession() {
+    AuditService.audit("Starting loading database session.");
+    HibernateUtil.getSessionFactory();
+    AuditService.audit("Finished loading database session.");
+  }
 
 }

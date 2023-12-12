@@ -2,11 +2,18 @@ package com.collection.app.log;
 
 import java.time.Instant;
 
-public class LogService {
+/**
+ * Service responsible for logging.
+ */
+public final class LogService {
 
-    public static void log(final String logMessage) {
-        final String logFormat = String.format("%s - %s", Instant.now().toString(), logMessage);
-        System.out.println(logFormat);
-    }
+  private LogService() {
+    // noop
+  }
+
+  public static void log(final String logMessage) {
+    final String logFormat = String.format("%s - %s", Instant.now().toString(), logMessage);
+    System.out.println(logFormat);
+  }
 
 }
