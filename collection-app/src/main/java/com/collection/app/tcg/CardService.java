@@ -4,6 +4,7 @@ import com.collection.app.audit.AuditService;
 import com.collection.app.collection.Collection;
 import com.collection.app.log.LogService;
 import com.collection.app.util.HibernateUtil;
+import com.google.common.collect.Lists;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -34,6 +35,66 @@ public class CardService {
       return session.createQuery(cardCriteriaQuery.where(predicate)).getResultList();
     }
 
+  }
+
+  /**
+   * Fetches all distinct games from cards inside a certain collection.
+   *
+   * @param collection {@link Collection} instance.
+   * @return {@link List} of {@link String}.
+   */
+  public List<String> getDistinctGames(final Collection collection) {
+    try (final Session session = HibernateUtil.getSessionFactory()
+        .openSession()) {
+      final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+      final CriteriaQuery<String> cardCriteriaQuery = criteriaBuilder.createQuery(String.class);
+      final Root<Card> root = cardCriteriaQuery.from(Card.class);
+      cardCriteriaQuery.select(root.get("game")).distinct(true);
+      final Predicate predicate = criteriaBuilder.equal(root.get("collection"), collection);
+      return session.createQuery(cardCriteriaQuery.where(predicate)).getResultList();
+    }
+  }
+
+  /**
+   * Fetches all existing rarities for a given game.
+   * Used to suggest card rarities in an autocomplete field.
+   *
+   * @param collection {@link Collection} instance.
+   * @param game {@link String} to be searched.
+   * @return {@link List} of {@link String}.
+   */
+  public List<String> getRarityFromGames(final Collection collection, final String game) {
+    try (final Session session = HibernateUtil.getSessionFactory()
+        .openSession()) {
+      final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+      final CriteriaQuery<String> cardCriteriaQuery = criteriaBuilder.createQuery(String.class);
+      final Root<Card> root = cardCriteriaQuery.from(Card.class);
+      cardCriteriaQuery.select(root.get("rarity")).distinct(true);
+      final Predicate whereIsCollection = criteriaBuilder.equal(root.get("collection"), collection);
+      final Predicate andIsGame = criteriaBuilder.equal(root.get("game"), game);
+      return session.createQuery(cardCriteriaQuery.where(whereIsCollection, andIsGame)).getResultList();
+    }
+  }
+
+  /**
+   * Fetches all existing sets for a given game.
+   * Used to suggest card sets in an autocomplete field.
+   *
+   * @param collection {@link Collection} instance.
+   * @param game {@link String} to be searched.
+   * @return {@link List} of {@link String}.
+   */
+  public List<String> getSetsFromGames(final Collection collection, final String game) {
+    try (final Session session = HibernateUtil.getSessionFactory()
+        .openSession()) {
+      final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+      final CriteriaQuery<String> cardCriteriaQuery = criteriaBuilder.createQuery(String.class);
+      final Root<Card> root = cardCriteriaQuery.from(Card.class);
+      cardCriteriaQuery.select(root.get("cardSet")).distinct(true);
+      final Predicate whereIsCollection = criteriaBuilder.equal(root.get("collection"), collection);
+      final Predicate andIsGame = criteriaBuilder.equal(root.get("game"), game);
+      return session.createQuery(cardCriteriaQuery.where(whereIsCollection, andIsGame)).getResultList();
+    }
   }
 
   /**

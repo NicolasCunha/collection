@@ -80,16 +80,15 @@ public class CreateNewCollectionController implements Initializable {
         gamesSelected
     );
     this.collectionService.save(collection);
-    StageHolder.getStage().getProperties().put("current_collection", collection);
-    this.goToCollectionMenu();
+    this.goToCollectionMenu(collection);
   }
 
   private void goToStartUp() {
     StageHolder.closeAndOpen("collection-startup.fxml", "Collection - Main Menu");
   }
 
-  private void goToCollectionMenu() {
-    StageHolder.closeAndOpen("collection-menu.fxml", "Collection - Menu");
+  private void goToCollectionMenu(final Collection collection) {
+    StageHolder.closeAndOpen("collection-menu.fxml", "Collection - Menu", collection);
   }
 
 }

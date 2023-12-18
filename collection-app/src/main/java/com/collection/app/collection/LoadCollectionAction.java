@@ -13,14 +13,13 @@ public class LoadCollectionAction {
   /**
    * Loads a collection to memory and forwards the user to the main menu screen.
    *
-   * <p>The selected collection is stored in a property inside JavaFX's primary stage,
-   * with the name "current_collection".
+   * <p>The selected collection is stored as "userData" in the current stage.
    *
-   * <p>The stage and its properties can be accessed through the
+   * <p>The stage and its userData can be accessed through the
    * static method {@link StageHolder#getStage()}.
    *
    * <p>Each subsequent operation that requires a reference to the selected collection
-   * will look up the Stage properties to fetch its reference.
+   * will look up the Stage userData to fetch its reference.
    *
    * @param collection {@link Collection} to be loaded.
    */
@@ -32,8 +31,7 @@ public class LoadCollectionAction {
     final UserSettings userSettings = UserSettings.load();
     userSettings.addRecentCollection(collection.getUuid());
     userSettings.save();
-    StageHolder.getStage().getProperties().put("current_collection", collection);
-    StageHolder.closeAndOpen("collection-menu.fxml", "Collection - Menu");
+    StageHolder.closeAndOpen("collection-menu.fxml", "Collection - Menu", collection);
   }
 
 }

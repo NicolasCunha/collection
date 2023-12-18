@@ -14,9 +14,6 @@ import javafx.stage.Stage;
  */
 public class CollectionMenuController implements Initializable {
 
-  private final Collection currentCollection =
-      (Collection) StageHolder.getStage().getProperties().get("current_collection");
-
   /**
    * Initialize JavaFX controller.
    *
@@ -28,19 +25,18 @@ public class CollectionMenuController implements Initializable {
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    this.setWindowTitle();
+    Platform.runLater(this::setWindowTitle);
   }
 
   private void setWindowTitle() {
+    final Collection collection = (Collection) StageHolder.getStage().getUserData();
     final Stage stage = StageHolder.getStage();
     if (stage == null) {
       LogService.log("Stage reference is null. Something wrong happened!");
       return;
     }
-    Platform.runLater(() -> {
-      StageHolder.getStage()
-          .setTitle(String.format("Collection - %s", currentCollection.getName()));
-    });
+    StageHolder.getStage()
+        .setTitle(String.format("Collection - %s", collection.getName()));
   }
 
 }

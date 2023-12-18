@@ -8,12 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.collection.app.tcg.ui.CreateCardController">
    <children>
       <AnchorPane prefHeight="590.0" prefWidth="600.0">
          <children>
-            <Button fx:id="createCollection" layoutX="423.0" layoutY="538.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="163.0" text="Save">
+            <Button fx:id="save" layoutX="423.0" layoutY="538.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="163.0" text="Save">
                <font>
                   <Font size="16.0" />
                </font>
@@ -23,49 +22,53 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Button fx:id="createCollection1" layoutX="423.0" layoutY="493.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="163.0" text="Save &amp; Add Other">
+            <Button fx:id="saveAndAdd" layoutX="423.0" layoutY="493.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="163.0" text="Save &amp; Add Other">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Label layoutX="8.0" layoutY="14.0" text="Game:">
+            <Label layoutX="12.0" layoutY="14.0" prefHeight="25.0" prefWidth="80.0" text="Game:">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="7.0" layoutY="50.0" text="Name:">
+            <Label layoutX="11.0" layoutY="50.0" prefHeight="25.0" prefWidth="80.0" text="Name:">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="117.0" text="Set:">
+            <Label layoutX="13.0" layoutY="117.0" prefHeight="25.0" prefWidth="80.0" text="Set:">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="189.0" prefHeight="25.0" prefWidth="74.0" text="Quantity:">
+            <Label layoutX="11.0" layoutY="189.0" prefHeight="25.0" prefWidth="80.0" text="Quantity:">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="8.0" layoutY="152.0" prefHeight="25.0" prefWidth="66.0" text="Rating:">
+            <Label layoutX="11.0" layoutY="152.0" prefHeight="25.0" prefWidth="80.0" text="Rating:">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="222.0" text="Comment:">
+            <Label layoutX="11.0" layoutY="223.0" prefHeight="25.0" prefWidth="80.0" text="Comment:">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextArea fx:id="comment" layoutX="10.0" layoutY="256.0" prefHeight="200.0" prefWidth="381.0" />
-            <Label layoutX="8.0" layoutY="82.0" text="Rarity:">
+            <Label layoutX="11.0" layoutY="82.0" prefHeight="25.0" prefWidth="80.0" text="Rarity:">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField fx:id="quantity" layoutX="246.0" layoutY="189.0" />
             <TextField fx:id="game" layoutX="246.0" layoutY="14.0" />
+            <TextField fx:id="name" layoutX="246.0" layoutY="50.0" />
+            <TextField fx:id="rarity" layoutX="246.0" layoutY="82.0" />
+            <TextField fx:id="set" layoutX="246.0" layoutY="117.0" />
+            <TextField fx:id="rating" layoutX="246.0" layoutY="152.0" />
+            <TextField fx:id="quantity" layoutX="246.0" layoutY="189.0" />
+            <TextArea fx:id="comment" layoutX="10.0" layoutY="256.0" prefHeight="200.0" prefWidth="381.0" />
          </children>
       </AnchorPane>
    </children>

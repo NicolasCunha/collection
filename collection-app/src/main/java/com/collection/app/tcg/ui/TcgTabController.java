@@ -7,6 +7,7 @@ import com.collection.app.util.StageHolder;
 import com.collection.app.util.TableViewUtil;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,8 +20,6 @@ import javafx.scene.control.TableView;
 public class TcgTabController implements Initializable {
 
   private final CardService cardService = new CardService();
-  private final Collection collection =
-      (Collection) StageHolder.getStage().getProperties().get("current_collection");
 
   @FXML
   private TableView<Card> tcgTable;
@@ -38,22 +37,23 @@ public class TcgTabController implements Initializable {
    */
   @FXML
   public void initialize(final URL location, final ResourceBundle resourceBundle) {
-    TableViewUtil.configTableCellValueFactory(tcgTable);
-    configEvents();
-    loadData();
-  }
-
-  private void configEvents() {
-
-    createNewTcgCard.setOnAction(event -> {
-      StageHolder.closeAndOpen("collection-create-new-card.fxml", "Collection - Create New Card");
+    Platform.runLater(() -> {
+      TableViewUtil.configTableCellValueFactory(tcgTable);
+      configureEvents();
       loadData();
     });
-
   }
 
-  public void loadData() {
-    tcgTable.setItems(FXCollections.observableArrayList(cardService.loadCards(this.collection)));
+  private void configureEvents() {
+    createNewTcgCard.setOnAction(event -> {
+      StageHolder.closeAndOpen("collection-create-new-card.fxml", "Collection - Create New Card");
+    });
+  }
+
+  private void loadData() {
+    final Collection collection =
+        (Collection) (this.createNewTcgCard).getScene().getWindow().getUserData();
+    tcgTable.setItems(FXCollections.observableArrayList(cardService.loadCards(collection)));
   }
 
 }
