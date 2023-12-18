@@ -11,9 +11,12 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 import org.controlsfx.control.textfield.TextFields;
 
 /**
@@ -105,9 +108,19 @@ public class CreateCardController implements Initializable {
     });
     this.saveAndAdd.setOnAction(event -> {
       this.persistCard();
-      // TODO add notification to inform user that card has been created
+      this.notifyUserCardHasBeenCreated();
       this.clearFormData();
     });
+  }
+
+  private void notifyUserCardHasBeenCreated() {
+    Notifications.create()
+        .title("Collection")
+        .text("Card has been created.")
+        .position(Pos.BOTTOM_RIGHT)
+        .graphic(null)
+        .hideAfter(Duration.seconds(5))
+        .showInformation();
   }
 
   private void clearFormData() {
